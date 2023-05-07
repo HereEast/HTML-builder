@@ -5,28 +5,29 @@ const readline = require("readline");
 const { stdin, stdout } = process;
 const pathToFile = path.join(__dirname, "text.txt");
 
-fs.writeFile(pathToFile, "",
-    err => {
-        if(err) throw err;
+fs.writeFile(pathToFile, "", (err) => {
+  if (err) {
+    console.error(`⛔️Error happened: ${err.message}`);
+  }
 });
 
-stdout.write("Would you like some milk, sir?\n");
+stdout.write("💬Would you like some milk, sir?\n");
 
 const rl = readline.createInterface(stdin, stdout);
 
-rl.on("line", line => {
-    if(line === "exit") {
-        close();
-    } else {
-        fs.appendFile(pathToFile, line + "\n", err => {
-            if(err) throw err;
-        });
-    }
-})
-
-rl.on("SIGINT", () => close());
-
-function close() {
+rl.on("line", (line) => {
+  if (line === "exit") {
     rl.close();
-    stdout.write("Good day, sir!\n");
-}
+  } else {
+    const newLine = line + "\n";
+    
+    fs.appendFile(pathToFile, newLine, (err) => {
+      if (err) {
+        console.error(`⛔️Error happened: ${err.message}`);
+      }
+    });
+  }
+});
+
+rl.on("close", () => stdout.write("👋Good day, sir!\n"));
+rl.on("SIGINT", () => rl.close());
