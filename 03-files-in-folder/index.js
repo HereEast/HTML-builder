@@ -11,7 +11,7 @@ fs.readdir(pathToFolder, options, (err, files) => {
 
   stdout.write("⬇️ Result:\n");
 
-  for (const file of files) {
+  files.forEach((file) => {
     if (file.isFile()) {
       const name = path.basename(file.name).split(".")[0];
       const ext = path.extname(file.name).slice(1);
@@ -23,5 +23,5 @@ fs.readdir(pathToFolder, options, (err, files) => {
         stdout.write(`${name} - ${ext} - ${size}kb\n`);
       });
     }
-  }
+  })
 });
