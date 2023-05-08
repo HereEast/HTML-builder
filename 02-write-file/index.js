@@ -20,7 +20,7 @@ rl.on("line", (line) => {
     rl.close();
   } else {
     const newLine = line + "\n";
-    
+
     fs.appendFile(pathToFile, newLine, (err) => {
       if (err) {
         console.error(`⛔️Error happened: ${err.message}`);
